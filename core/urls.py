@@ -16,10 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from apps.cabinet_api.urls import router
+from django.views.static import serve
+
+from apps.cabinet_api import urls
+from core import settings
+
+static_and_media_urls = [
+    path("static/<path:path>", serve, {"document_root": settings.STATIC_ROOT}),
+    path("media/<path:path>", serve, {"document_root": settings.MEDIA_ROOT}),
+]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
-    path("api/v1/", include(router.urls)),
+    path("api/v1/", include(urls)),
 ]
+
+urlpatterns += static_and_media_urls
