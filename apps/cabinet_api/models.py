@@ -1,3 +1,9 @@
+from django.contrib.auth.models import AbstractBaseUser, UserManager, AbstractUser
 from django.db import models
 
-# Create your models here.
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+
+    REQUIRED_FIELDS = ["username"]
+    USERNAME_FIELD = "email"
