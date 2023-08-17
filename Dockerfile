@@ -6,7 +6,7 @@ ENV PYTHONBUFFERED=1 \
 
 RUN pip install --upgrade pip
 
-RUN pip install poetry==$POETRY_VERSION
+RUN pip install "poetry==$POETRY_VERSION"
 
 WORKDIR /app
 
