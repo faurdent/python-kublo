@@ -12,7 +12,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password", "password2")
+        fields = ("email", "password", "password2")
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:
@@ -20,5 +20,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        validated_data.pop("password2")
-        return CustomUser.objects.create_user(**validated_data)
+        try:
+            validated_data.pop("password2")
+            user = CustomUser(**validated_data)
+            user.set_password(validated_data["password"])
+            user.save()
+            return user
+        except Exception as e:
+            raise e
