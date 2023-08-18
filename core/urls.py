@@ -24,6 +24,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from core import settings
 
+from apps.cabinet_api.views import DecoratedTokenObtainPairView, DecoratedTokenRefreshView
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
@@ -48,8 +50,8 @@ urlpatterns = [
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("api-auth/", include("rest_framework.urls")),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/", DecoratedTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", DecoratedTokenRefreshView.as_view(), name="token_refresh"),
     path("api/v1/", include("apps.cabinet_api.urls")),
 ]
 

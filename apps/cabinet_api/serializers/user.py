@@ -20,11 +20,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        try:
-            validated_data.pop("password2")
-            user = CustomUser(**validated_data)
-            user.set_password(validated_data["password"])
-            user.save()
-            return user
-        except Exception as e:
-            raise e
+        validated_data.pop("password2")
+        user = CustomUser(**validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
