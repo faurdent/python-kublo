@@ -6,11 +6,11 @@ ENV PYTHONBUFFERED=1 \
 
 RUN pip install --upgrade pip
 
-RUN pip install poetry==$POETRY_VERSION
+RUN pip install "poetry==$POETRY_VERSION"
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock entrypoint.sh ./
+COPY pyproject.toml entrypoint.sh ./
 
 RUN poetry install --no-interaction --no-ansi --no-dev --no-root
 
