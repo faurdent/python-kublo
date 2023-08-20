@@ -17,6 +17,7 @@ RUN poetry install --no-interaction --no-ansi --no-dev --no-root
 COPY ./core core
 COPY ./apps apps
 COPY ./manage.py manage.py
+COPY ./tests tests
 
 RUN chmod +x entrypoint.sh
 
