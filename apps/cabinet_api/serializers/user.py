@@ -6,7 +6,7 @@ from apps.cabinet_api.models import CustomUser
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True, validators=[UniqueValidator(CustomUser.objects.all())])
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
@@ -21,7 +21,4 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2")
-        user = CustomUser(**validated_data)
-        user.set_password(validated_data["password"])
-        user.save()
-        return user
+        return CustomUser.objects.create_user(**validated_data)

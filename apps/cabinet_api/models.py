@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from apps.cabinet_api.managers import CustomUserManager
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -9,8 +11,9 @@ class CustomUser(AbstractUser):
         _("username"),
         max_length=150,
         validators=[AbstractUser.username_validator],
-        error_messages=({"unique": _("A user with that username already exists.")}),
     )
+
+    objects = CustomUserManager()
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = "email"
